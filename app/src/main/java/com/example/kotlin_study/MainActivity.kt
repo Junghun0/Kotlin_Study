@@ -2,7 +2,6 @@ package com.example.kotlin_study
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
@@ -15,7 +14,10 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        button1.setOnClickListener { Log.e("Onclick", "Test!") }
+
+        go_recyclerView.setOnClickListener {
+            startActivity<RecyclerViewSampleActivity>()
+        }
 
         //자바 화면전환
         //startActivity(Intent(this, Sample1Activity::class.java))
@@ -50,6 +52,23 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             0 -> "짝"
             else -> "홀"
         }
+
+        //for(int i = 0 ; i < 9 ;i++)
+        for (i in 0..9) {
+
+        }
+
+        var text: String? = null
+        //안전한 호출
+        debug(text?.trim())
+        //강제 호출 개발자가 null 이 안됨을 명시
+        debug(text!!.trim())
+
+        //컬렉션
+        var numList = arrayListOf(1, 2, 3, 4, 5)
+        var filtered = numList
+            .filter { it % 2 == 0 }
+            .map { "${it}번" }
     }
 
     //public void isEven(int number){}
@@ -61,7 +80,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     }
 
     fun isEven2(number: Int): String = when (number % 2) {
-            0 -> "짝"
-            else -> "홀"
-        }
+        0 -> "짝"
+        else -> "홀"
+    }
 }
