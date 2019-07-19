@@ -1,7 +1,7 @@
 package com.example.kotlin_study
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         //startActivity(Intent(this, Sample1Activity::class.java))
 
         //anko를 사용한 화면전환
-        startActivity<Sample1Activity>("id" to 1, "name" to "Junghoon")
+        //startActivity<Sample1Activity>("id" to 1, "name" to "Junghoon")
         //anko를 이용한 Toast 메시지
         toast("Click Toast")
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         //안전한 호출
         debug(text?.trim())
         //강제 호출 개발자가 null 이 안됨을 명시
-        debug(text!!.trim())
+//        debug(text!!.trim())
 
         //컬렉션
         var numList = arrayListOf(1, 2, 3, 4, 5)
