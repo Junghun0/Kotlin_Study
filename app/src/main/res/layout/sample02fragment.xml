@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sample01.RecyclerViewSampleActivity">
-    
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".sample02.BlankFragment">
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sample_recyclerView"
+        android:id="@+id/sample02_recyclerView"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-
-
-</LinearLayout>
+</FrameLayout>

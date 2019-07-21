@@ -1,12 +1,14 @@
-package com.example.kotlin_study
+package com.example.kotlin_study.sample01
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlin_study.R
 import com.example.kotlin_study.databinding.RecyclerItemBinding
 import kotlinx.android.synthetic.main.activity_recycler_view_sample.*
+import org.jetbrains.anko.toast
 
 class RecyclerViewSampleActivity : AppCompatActivity() {
 
@@ -14,7 +16,9 @@ class RecyclerViewSampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler_view_sample)
 
-        val adapter = PersonAdapter()
+        val adapter = PersonAdapter { person ->
+            toast(person.toString())
+        }
         sample_recyclerView.adapter = adapter
 
         var people = arrayListOf<Person>()
@@ -30,13 +34,19 @@ class RecyclerViewSampleActivity : AppCompatActivity() {
 data class Person(var name: String, var age: Int)
 
 //Adapter
-class PersonAdapter: RecyclerView.Adapter<PersonAdapter.PersonViewHolder>(){
+class PersonAdapter(private val callback: (person: Person) -> Unit): RecyclerView.Adapter<PersonAdapter.PersonViewHolder>(){
     var items = arrayListOf<Person>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_item,parent,false)
-        return PersonViewHolder(RecyclerItemBinding.bind(view))
+        val holder = PersonViewHolder(
+            RecyclerItemBinding.bind(view)
+        )
+        view.setOnClickListener{
+            callback.invoke(items[holder.adapterPosition])
+        }
+        return holder
     }
 
     override fun getItemCount(): Int = items.size
