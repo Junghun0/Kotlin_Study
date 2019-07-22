@@ -14,6 +14,7 @@ import com.example.kotlin_study.sample02.Sample02Activity
 import com.example.kotlin_study.sample03.Sample03Activity
 import com.example.kotlin_study.sample04.Example04Activity
 import com.example.kotlin_study.sample05.Sample05Activity
+import com.example.kotlin_study.sample06.Sample06Activity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 
@@ -35,7 +36,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         subjects.add(Subject("Sample02_fragment", Sample02Activity::class.java))
         subjects.add(Subject("BMI calculator!", Sample03Activity::class.java))
         subjects.add(Subject("StopWatch!",Example04Activity::class.java))
-        subjects.add(Subject("Provider!",Sample05Activity::class.java))
+        subjects.add(Subject("Google Calendar!",Sample05Activity::class.java))
+        subjects.add(Subject("Gallery", Sample06Activity::class.java))
 
         adapter.items = subjects
         adapter.notifyDataSetChanged()

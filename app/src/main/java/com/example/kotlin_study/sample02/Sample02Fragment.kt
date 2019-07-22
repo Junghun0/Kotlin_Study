@@ -62,5 +62,4 @@ class SampleAdapter(private val clickListener: (sample: MySample) -> Unit) : Rec
     }
 
     class SampleViewHolder(val binding : Sample02RecyclerItemLayoutBinding) : RecyclerView.ViewHolder(binding.root)
-
 }
