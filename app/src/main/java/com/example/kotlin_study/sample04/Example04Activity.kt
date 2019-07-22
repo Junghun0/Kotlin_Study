@@ -10,11 +10,17 @@ import kotlinx.android.synthetic.main.activity_example04.*
 
 class Example04Activity : AppCompatActivity(), LifecycleOwner {
 
+    //viewModel 을 전역변수로 선언
+    val viewModel : StopWatchViewModel by lazy {
+        ViewModelProviders.of(this).get(StopWatchViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example04)
 
-        val viewModel = ViewModelProviders.of(this).get(StopWatchViewModel::class.java)
+        //viewModel초기화 코드 옮기기
+        //val viewModel = ViewModelProviders.of(this).get(StopWatchViewModel::class.java)
 
         viewModel._time.observe(this, Observer { _time ->
             val sec = _time / 100
