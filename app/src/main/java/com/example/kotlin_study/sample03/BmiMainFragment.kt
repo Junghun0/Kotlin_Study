@@ -20,6 +20,7 @@ class BmiMainFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_bmi_main,container,false);
 
+
         result_button.setOnClickListener{
             //자바 형식 bundle 사용
             /*

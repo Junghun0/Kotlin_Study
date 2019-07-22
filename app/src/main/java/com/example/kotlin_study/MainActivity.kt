@@ -1,13 +1,18 @@
 package com.example.kotlin_study
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_study.databinding.ItemSubjectBinding
 import com.example.kotlin_study.sample01.RecyclerViewSampleActivity
+import com.example.kotlin_study.sample02.Sample02Activity
+import com.example.kotlin_study.sample03.Sample03Activity
+import com.example.kotlin_study.sample04.Example04Activity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 
@@ -18,7 +23,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = SubjectAdapter{subject ->
+        val adapter = SubjectAdapter { subject ->
             val intent = Intent(this, subject.clazz)
             startActivity(intent)
         }
@@ -26,22 +31,29 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         val subjects = arrayListOf<Subject>()
         subjects.add(Subject("RecyclerView Sample!", RecyclerViewSampleActivity::class.java))
+        subjects.add(Subject("Sample02_fragment", Sample02Activity::class.java))
+        subjects.add(Subject("BMI calculator!", Sample03Activity::class.java))
+        subjects.add(Subject("StopWatch!",Example04Activity::class.java))
 
         adapter.items = subjects
         adapter.notifyDataSetChanged()
+
+        main_recyclerView.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
     }
 }
 
-data class Subject(var title: String, val clazz: Class<RecyclerViewSampleActivity>)
+data class Subject(var title: String, val clazz: Class<out Activity>)
 
-class SubjectAdapter(private val clickListener: (person: Subject) -> Unit):
-        RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>(){
+class SubjectAdapter(private val clickListener: (person: Subject) -> Unit) :
+    RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
     var items = arrayListOf<Subject>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_subject, parent, false)
         val viewHolder = SubjectViewHolder(ItemSubjectBinding.bind(view))
-        view.setOnClickListener{
+        view.setOnClickListener {
             clickListener.invoke(items[viewHolder.adapterPosition])
         }
         return viewHolder
@@ -53,7 +65,7 @@ class SubjectAdapter(private val clickListener: (person: Subject) -> Unit):
         holder.binding.subject = items[position]
     }
 
-    class SubjectViewHolder(val binding: ItemSubjectBinding): RecyclerView.ViewHolder(binding.root)
+    class SubjectViewHolder(val binding: ItemSubjectBinding) : RecyclerView.ViewHolder(binding.root)
 
 }
 
