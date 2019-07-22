@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.example.kotlin_study.R
 import kotlinx.android.synthetic.main.activity_sample06.*
 import org.jetbrains.anko.AnkoLogger
+import kotlin.concurrent.timer
 
 class Sample06Activity : AppCompatActivity(), AnkoLogger {
     companion object {
@@ -27,7 +28,9 @@ class Sample06Activity : AppCompatActivity(), AnkoLogger {
         ) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)){
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
                 //이전에 이미 권한이 거부되었을 때 설명
                 AlertFragment(onClickListener = {
                     //권한 요청
@@ -36,7 +39,7 @@ class Sample06Activity : AppCompatActivity(), AnkoLogger {
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                         REQUEST_READ_EXTERNAL_STORAGE
                     )
-                }).show(supportFragmentManager,"dialog")
+                }).show(supportFragmentManager, "dialog")
 
             } else {
                 //권한 요청
@@ -62,12 +65,13 @@ class Sample06Activity : AppCompatActivity(), AnkoLogger {
         when (requestCode) {
             REQUEST_READ_EXTERNAL_STORAGE -> {
                 if ((grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                ) {
                     //권한 허용됨
                     getAllPhotos()
-                }else{
+                } else {
                     //권한 거부
-                    Log.e("권한 거부","check")
+                    Log.e("권한 거부", "check")
                 }
             }
         }
@@ -83,11 +87,13 @@ class Sample06Activity : AppCompatActivity(), AnkoLogger {
         )
 
         val items = arrayListOf<ViewpagerModel>()
-        if (cursor != null){
-            while(cursor.moveToNext()){
-                val uri = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val uri =
+                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
                 items.add(ViewpagerModel(uri))
             }
+            cursor.close()
         }
 
         val adapter = ViewpagerAdapter()
@@ -95,5 +101,16 @@ class Sample06Activity : AppCompatActivity(), AnkoLogger {
         adapter.notifyDataSetChanged()
 
         viewpager2_main.adapter = adapter
+
+        //3초 마다 페이지넘기기
+        timer(period = 3000) {
+            runOnUiThread {
+                if (viewpager2_main.currentItem < adapter.itemCount - 1) {
+                    viewpager2_main.currentItem = viewpager2_main.currentItem + 1
+                } else {
+                    viewpager2_main.currentItem = 0
+                }
+            }
+        }
     }
 }
