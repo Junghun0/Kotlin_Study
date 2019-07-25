@@ -23,6 +23,7 @@ class LobbyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         enter_button.setOnClickListener {
+
         }
 
     }
